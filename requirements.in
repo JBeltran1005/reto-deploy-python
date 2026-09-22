@@ -1,0 +1,4 @@
+flask
+gunicorn
+pip-tools
+flake8
