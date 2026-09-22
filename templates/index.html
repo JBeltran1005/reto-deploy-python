@@ -61,7 +61,7 @@
         .gallery {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
         }
         .evidence-card {
             background-color: #1e293b;
@@ -70,16 +70,44 @@
             padding: 1.8rem;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
         .evidence-card h2 {
-            margin-top: 0;
-            margin-bottom: 0.5rem;
+            margin: 0 0 0.4rem 0;
             color: #38bdf8;
             font-size: 1.3rem;
         }
         .evidence-card p {
             color: #cbd5e1;
             font-size: 0.95rem;
-            margin-bottom: 1rem;
+            margin: 0;
+        }
+        .btn-toggle {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        .btn-toggle:hover {
+            background-color: #0369a1;
+        }
+        .btn-toggle:active {
+            transform: scale(0.98);
+        }
+        .image-container {
+            display: none;
+            margin-top: 1.2rem;
+            animation: fadeIn 0.3s ease-in-out;
         }
         .evidence-card img {
             width: 100%;
@@ -88,6 +116,10 @@
             border: 1px solid #475569;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -109,24 +141,63 @@
         </div>
 
         <div class="gallery">
+            <!-- Evidencia 1 -->
             <div class="evidence-card">
-                <h2>1. Estructura del Proyecto</h2>
-                <p>Organización de archivos en el repositorio y servidor: código fuente, entorno virtual, plantillas y archivos de dependencias.</p>
-                <img src="{{ url_for('static', filename='img/1-estructura.png') }}" alt="Estructura del Proyecto">
+                <div class="card-header">
+                    <div>
+                        <h2>1. Estructura del Proyecto</h2>
+                        <p>Organización de archivos: código fuente, entorno virtual, plantillas y dependencias.</p>
+                    </div>
+                    <button class="btn-toggle" onclick="toggleEvidence('img-1', this)">Ver Captura</button>
+                </div>
+                <div id="img-1" class="image-container">
+                    <img src="{{ url_for('static', filename='img/1-estructura.png') }}" alt="Estructura del Proyecto">
+                </div>
             </div>
 
+            <!-- Evidencia 2 -->
             <div class="evidence-card">
-                <h2>2. Entorno Virtual Aislado (.venv)</h2>
-                <p>Binarios y módulos de Python instalados de forma aislada dentro de <code>.venv/bin</code> sin afectar el entorno global del sistema operativo.</p>
-                <img src="{{ url_for('static', filename='img/2-entorno-virtual.png') }}" alt="Entorno Virtual Aislado">
+                <div class="card-header">
+                    <div>
+                        <h2>2. Entorno Virtual Aislado (.venv)</h2>
+                        <p>Binarios y módulos de Python aislados dentro de <code>.venv/bin</code> sin paquetes globales.</p>
+                    </div>
+                    <button class="btn-toggle" onclick="toggleEvidence('img-2', this)">Ver Captura</button>
+                </div>
+                <div id="img-2" class="image-container">
+                    <img src="{{ url_for('static', filename='img/2-entorno-virtual.png') }}" alt="Entorno Virtual Aislado">
+                </div>
             </div>
 
+            <!-- Evidencia 3 -->
             <div class="evidence-card">
-                <h2>3. Servicios Activos del Sistema</h2>
-                <p>Servicios <code>miapp.service</code> (Gunicorn) y <code>nginx.service</code> ejecutándose en estado activo (running) administrados por Systemd.</p>
-                <img src="{{ url_for('static', filename='img/3-servicios-activos.png') }}" alt="Servicios Activos">
+                <div class="card-header">
+                    <div>
+                        <h2>3. Servicios Activos del Sistema</h2>
+                        <p>Servicios <code>miapp.service</code> y <code>nginx.service</code> en ejecución activa vía Systemd.</p>
+                    </div>
+                    <button class="btn-toggle" onclick="toggleEvidence('img-3', this)">Ver Captura</button>
+                </div>
+                <div id="img-3" class="image-container">
+                    <img src="{{ url_for('static', filename='img/3-servicios-activos.png') }}" alt="Servicios Activos">
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleEvidence(id, btn) {
+            const container = document.getElementById(id);
+            if (container.style.display === "block") {
+                container.style.display = "none";
+                btn.textContent = "Ver Captura";
+                btn.style.backgroundColor = "#0284c7";
+            } else {
+                container.style.display = "block";
+                btn.textContent = "Ocultar Captura";
+                btn.style.backgroundColor = "#475569";
+            }
+        }
+    </script>
 </body>
 </html>
